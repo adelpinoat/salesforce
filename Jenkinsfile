@@ -17,7 +17,7 @@ node {
     stage('checkout source') {
         // when running in multi-branch job, one must issue this command
         checkout scm
-    }
+      }
 
     withCredentials([file(credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
         stage('Create Scratch Org') {
@@ -26,7 +26,10 @@ node {
             }else{
                  rc = bat returnStatus: true, script: "\"${toolbelt}\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username ${HUB_ORG} --jwtkeyfile \"${jwt_key_file}\" --setdefaultdevhubusername --instanceurl ${SFDC_HOST}"
             }
-            if (rc != 0) { error 'hub org authorization failed' }
+            if (rc != 0) { 
+              error 'hub org authorization failed' 
+              jiraNewIssue site: 'prueba1'
+              }
 
             // need to pull out assigned username
               if (isUnix()) {
@@ -34,6 +37,11 @@ node {
               }else{
                    rmsg = bat returnStdout: true, script: "\"${toolbelt}\" force:org:create --definitionfile config/project-scratch-def.json --json --setdefaultusername"
               }
+              if (rc != 0) { 
+                error 'ERRROOOOOOOOOORRRRRRRRRRRR failed' 
+                jiraNewIssue site: 'prueba1'
+              }
+
             printf rmsg
             println('Hello from a Job DSL script!')
             println(rmsg)
