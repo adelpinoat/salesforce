@@ -16,13 +16,7 @@ node {
 
 
 
-    stage("currentresult"){
-        steps{
-              echo "Este paso se ejecuta siempre"
-              echo "Init result: ${currentBuild.result}"
-              }
- 
-          }
+    
     stage('checkout source') {
         // when running in multi-branch job, one must issue this command
         checkout scm
@@ -68,7 +62,14 @@ node {
             robj = null
             
         }
-        
+        stage("currentresult"){
+          steps{
+              echo "Este paso se ejecuta siempre"
+              echo "Init result: ${currentBuild.result}"
+              }
+ 
+          }
+
           stage('Push To Test Org') {
               if (isUnix()) {
                     rc = sh returnStatus: true, script: "\"${toolbelt}\" force:source:push --targetusername ${SFDC_USERNAME}"
