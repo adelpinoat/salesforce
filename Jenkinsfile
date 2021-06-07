@@ -37,6 +37,7 @@ node {
             // need to pull out assigned username
               if (isUnix()) {
                 echo "Init result: ${currentBuild.result}"
+                echo "Init result: ${currentBuild.currentResult}"
                 //rmsg = sh returnStdout: true, script: "${toolbelt} force:org:create --definitionfile config/enterprise-scratch-def.json --json --setdefaultusername"
               }else{
                    rmsg = bat returnStdout: true, script: "\"${toolbelt}\" force:org:create --definitionfile config/project-scratch-def.json --json --setdefaultusername"
@@ -64,10 +65,16 @@ node {
             
         }
         stage("currentresult"){
-          when { currentBuild.result == "FAILURE" }
+          when { currentBuild.currentResult == 'FAILURE' }
           steps{
               echo "Este paso se ejecuta siempre"
               echo "Init result: ${currentBuild.result}"
+              echo "Init result: ${currentBuild.currentResult}"
+              echo "Init result: ${currentBuild.currentResult}"
+              echo "Init result: ${currentBuild.currentResult}"
+              echo "Init result: ${currentBuild.currentResult}"
+              echo "Init result: ${currentBuild.currentResult}"
+              echo "Init result: ${currentBuild.currentResult}"
               }
  
           }
