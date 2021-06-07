@@ -14,6 +14,15 @@ node {
     println JWT_KEY_CRED_ID
     def toolbelt = tool 'toolbelt'
 
+
+
+    stage("currentresult"){
+        steps{
+              echo "Este paso se ejecuta siempre"
+              echo "Init result: ${currentBuild.result}"
+              }
+ 
+          }
     stage('checkout source') {
         // when running in multi-branch job, one must issue this command
         checkout scm
@@ -71,6 +80,7 @@ node {
             }
             
           }
+
              
     }
 }
