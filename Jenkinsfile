@@ -63,6 +63,7 @@ node {
             
         }
         stage("currentresult"){
+          when { currentBuild.result == "FAILURE" }
           steps{
               echo "Este paso se ejecuta siempre"
               echo "Init result: ${currentBuild.result}"
